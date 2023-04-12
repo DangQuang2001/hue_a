@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Back-end cho app Hue Accommodation",
   "main": "index.js",
-  "engines":{
-    "node":"14.x"
+  "engines": {
+    "node": "14.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,6 +18,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.1",
     "nodemon": "^2.0.21",
+    "pusher": "^5.1.2",
     "socket.io": "^4.6.1"
   }
 }
