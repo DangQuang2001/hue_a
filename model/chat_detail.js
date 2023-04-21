@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const message = require('../socketIO/message');
 const Schema = mongoose.Schema
 
 
 const ChatDetail = new Schema({
-    roomChatId: { type: String, required: true, unique: true },
+    _id: { type: mongoose.Schema.Types.ObjectId },
     message: [
         {
             userId: { type: String, required: true },

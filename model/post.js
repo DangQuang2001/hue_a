@@ -7,6 +7,9 @@ const postSchema = new Schema({
         required: true,
         unique: true
     },
+    title: {
+        type: String,
+    },
     caption: {
         type: String,
     },
@@ -39,7 +42,8 @@ const postSchema = new Schema({
     },
     imageUrls: [{ type: String }],
     likedBy: [{ type: String }],
-    isHidden: [{ type: String }]
+    isHidden: [{ type: String }],
+    isHiddenHost: { type: Boolean }
 }, {
     timestamps: true,
 });

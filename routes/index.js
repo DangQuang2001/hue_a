@@ -10,6 +10,8 @@ const FcmTokenController = require('../controller/fcmToken_controller');
 const NotifcationController = require('../controller/notification_controller');
 const PostController = require('../controller/post_controller');
 const ChatController = require('../controller/chat_controller');
+const CommentController = require('../controller/comment_controller');
+const FavouriteController = require('../controller/favourite_controller');
 
 //MotelHouse
 routes.post('/motelhouse/create', MotelHouseController.addMotel) // Them MotelHouse
@@ -26,6 +28,8 @@ routes.get('/motelhouse/listremove/:hostID', MotelHouseController.getListRemove)
 routes.get('/motelhouse/get-motel-detail/:id', MotelHouseController.getMotelDetail) //getMotel detail
 routes.get('/motelhouse/search/:searchValue', MotelHouseController.search) //search Motel
 routes.get('/motelhouse/top/rating', MotelHouseController.getRatingMotel) //get top Rating
+routes.post('/motelhouse/review-room', MotelHouseController.reviewRoom) //Review room by roomId & userId
+routes.get('/motelhouse/get-review/:roomId', MotelHouseController.getReview) //Get review by roomId
 
 //User
 routes.get('/user', UserController.getAllUsers)
@@ -37,7 +41,6 @@ routes.post('/user/login', UserController.login)
 routes.get('/user/checkemail/:email', UserController.checkIsmail)
 
 //Rent
-
 routes.post('/rent/create', RentController.addRent) //Add rent
 routes.get('/rent/confirm/:id', RentController.confirmRent) //confirm rent
 routes.get('/rent/waiting/:hostId/:isConfirmed', RentController.waitingRent) //waiting rent
@@ -51,41 +54,44 @@ routes.post('/fcmtoken/check-user-turn-off', FcmTokenController.checkUserTurnOff
 routes.post('/fcmtoken/check-user-token', FcmTokenController.checkUserToken)
 routes.post('/fcmtoken/check-user-logout', FcmTokenController.checkUserLogOut)
 routes.post('/fcmtoken/create', FcmTokenController.checkDeviceToken) // Them fcmToken
-routes.get('/fcmtoken/get-list-token-device', FcmTokenController.getListTokenDevice) // Get list fcmToken
+routes.get('/fcmtoken/get-list-token-device', FcmTokenController.getListTokenDevice) // Get list fcmToken device
+routes.get('/fcmtoken/get-list-token-user/:userId', FcmTokenController.getListTokenUser) // Get list fcmToken user
 
 
 //Notification
-
 routes.post('/notification/create', NotifcationController.addNotification) // add Notification
 routes.get('/notification/filter/:hostID', NotifcationController.getAllNotification) // Get all Notification
 routes.get('/notification/delete-notification/:userID', NotifcationController.checkNotification) // delete Notification
 
 //post 
-
 routes.post('/post/create', PostController.addPost) // add Post
 routes.post('/post/get-all-post-by-tag', PostController.getAllPostByTag) // add Post
 routes.post('/post/like-post', PostController.likePost) // like Post
+routes.post('/post/dislike-post', PostController.dislikePost) // Dislike Post
+routes.get('/post/get-post-by-userId/:userId', PostController.getPostByUserId) // Get Post by UserId
+routes.post('/post/hidden-post', PostController.hiddenPost) // Hidden post
+routes.post('/post/hidden-post-by-host', PostController.hiddenHost) // Hidden post by host
+routes.get('/post/delete-post/:postId', PostController.deletePost) // Delete post
 
 //Chat
-
 routes.post('/room-chat/create-room', ChatController.createRoom) // Create Room Chat
-// {
-//     "room":{
-//         "id":"1234",
-//       "userId": ["641c29083bc17ac95845c840","641bf8cdb304392234002c7f"]  
-//     } ,
-//     "message":{
-//         "userId":"641c29083bc17ac95845c840",
-//         "content":"Chao anh!",
-//         "typeM":"text",
-//         "createdAt":"2023-04-09T15:51:57.637Z"
-//     }
-//   }
-
-
 routes.get('/room-chat/get-room-chat/:userId', ChatController.getRoomChat) // Get room Chat
 routes.post('/room-chat/get-chat-detail', ChatController.getChatDetail) // Get room Chat
 routes.post('/room-chat/check-room', ChatController.checkRoom) // Check Room
 routes.post('/room-chat/add-message', ChatController.addMessage) // Add message
+routes.post('/room-chat/is-read-message', ChatController.isReadMessage) // Check read message
+
+// Comment 
+routes.post('/post-comment/add-comment', CommentController.addComment)  // Add comment by PostId
+routes.post('/post-comment/get-comment', CommentController.getComment)  // Get Comment by postId
+routes.post('/post-comment/create-reply-comment', CommentController.createReplyComment)  // Reply comment 
+routes.post('/post-comment/get-reply-comment', CommentController.getReplyComment)  // Get reply comment 
+routes.post('/post-comment/add-reply-comment', CommentController.addReplyComment)  // Add reply comment 
+
+//Favourite
+routes.post('/favourite/add-favourite', FavouriteController.addFavourite) // Add favourite 
+routes.get('/favourite/get-favourite/:userId', FavouriteController.getFavourite) // Get favourite 
+routes.delete('/favourite/delete-favourite', FavouriteController.deleteFavourite) // Delete favourite 
+routes.post('/favourite/check-favourite', FavouriteController.CheckFavourite) // Check favourite 
 
 module.exports = routes;

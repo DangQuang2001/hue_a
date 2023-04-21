@@ -1,4 +1,5 @@
 const MotelHouse = require('../model/motel_house.js')
+const ReviewRoom = require('../model/review_room.js')
 
 class MotelHouseController {
 
@@ -179,6 +180,22 @@ class MotelHouseController {
     catch (error) {
       res.status(403).json(error)
     }
+  }
+
+  reviewRoom(req, res, next) {
+    const reviewRoom = new ReviewRoom(req.body)
+    reviewRoom.save()
+      .then((data) => res.status(200).json(data))
+      .catch((error) => res.status(403).json(error))
+  }
+
+  getReview(req, res, next) {
+    ReviewRoom.find({
+      roomId: req.params.roomId
+    })
+      .populate('userId')
+      .then((data) => res.status(200).json(data))
+      .catch((error) => res.status(403).json(error))
   }
 
 }

@@ -121,6 +121,7 @@ class FcmTokenController {
         }, {
             $set: {
                 isOnline: fcmUserToken.isOnline,
+                isSignOut: false,
                 lastSigned: fcmUserToken.lastSigned
             },
         })
@@ -166,6 +167,22 @@ class FcmTokenController {
         let listToken = [];
         FcmDeviceToken.find({
             isOpenApp: false
+        })
+            .then((result) => {
+                result.map((e) => {
+                    listToken.push(e.fcmToken);
+                })
+                return res.status(200).json(listToken)
+            })
+            .catch((error) => res.status(403).json({
+                message: error,
+            }))
+    }
+    getListTokenUser(req, res, next) {
+        let listToken = [];
+        FcmUserToken.find({
+            isOnline: true,
+            userID: req.params.userId
         })
             .then((result) => {
                 result.map((e) => {
