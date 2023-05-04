@@ -198,6 +198,45 @@ class MotelHouseController {
       .catch((error) => res.status(403).json(error))
   }
 
+  updateLocation(req, res, next) {
+    MotelHouse.find({})
+      .then((data) => {
+        // lặp qua tất cả các document trong collection MotelHouse
+        for (let i = 0; i < data.length; i++) {
+          const motel = data[i];
+          // tạo giá trị location mới từ longitude và latitude của document hiện tại
+          const newLocation = {
+            type: "Point",
+            coordinates: [motel.longitude, motel.latitude]
+          };
+          // cập nhật giá trị location cho document hiện tại
+          MotelHouse.updateOne({ id: motel.id }, { $set: { location: newLocation } })
+            .then(() => console.log(`Cập nhật location cho motel ${motel.name} thành công`))
+            .catch(error => console.log(`Cập nhật location cho motel ${motel.name} thất bại: ${error}`));
+        }
+      })
+      .catch((error) => console.log(error));
+  }
+
+  //Get List Motel nearby positionCurrentUser limit()
+  getNearby(req, res, next) {
+    var data = req.body;
+    MotelHouse.aggregate([
+      {
+        $geoNear: {
+          near: { type: "Point", coordinates: [data.longitude, data.latitude] },
+          distanceField: "distance",
+          spherical: true,
+          maxDistance: data.maxDistance
+        }
+      },
+      { $skip: data.skip },
+      { $limit: data.limit }
+    ])
+      .then((result) => res.status(200).json(result))
+      .catch((error) => res.status(403).json(error))
+
+  }
 }
 
 module.exports = new MotelHouseController();

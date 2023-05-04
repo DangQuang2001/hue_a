@@ -19,9 +19,21 @@ const MotelHouse = new Schema({
   hasRoom: { type: Boolean, },
   idReview: { type: Number, },
   adParams: { type: Object, required: true },
-  isDelete: { type: Boolean, required: true }
+  isDelete: { type: Boolean, required: true },
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
+  }
 }, {
   timestamps: true
 });
+MotelHouse.index({ location: '2dsphere' });
 
 module.exports = mongoose.model('MotelHouse', MotelHouse);

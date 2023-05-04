@@ -179,16 +179,26 @@ class FcmTokenController {
             }))
     }
     getListTokenUser(req, res, next) {
-        let listToken = [];
+        let listTokenOnline = [];
+        let listTokenOffline = [];
         FcmUserToken.find({
-            isOnline: true,
+            isSignOut: false,
             userID: req.params.userId
         })
             .then((result) => {
                 result.map((e) => {
-                    listToken.push(e.fcmToken);
+                    if (e.isOnline) {
+
+                        listTokenOnline.push(e.fcmToken);
+                    }
+                    else {
+                        listTokenOffline.push(e.fcmToken);
+                    }
                 })
-                return res.status(200).json(listToken)
+                return res.status(200).json({
+                    online: listTokenOnline,
+                    offline: listTokenOffline
+                })
             })
             .catch((error) => res.status(403).json({
                 message: error,

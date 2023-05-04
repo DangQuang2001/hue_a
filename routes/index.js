@@ -30,15 +30,17 @@ routes.get('/motelhouse/search/:searchValue', MotelHouseController.search) //sea
 routes.get('/motelhouse/top/rating', MotelHouseController.getRatingMotel) //get top Rating
 routes.post('/motelhouse/review-room', MotelHouseController.reviewRoom) //Review room by roomId & userId
 routes.get('/motelhouse/get-review/:roomId', MotelHouseController.getReview) //Get review by roomId
+routes.post('/motelhouse/get-nearby', MotelHouseController.getNearby) //Get nearby
 
 //User
-routes.get('/user', UserController.getAllUsers)
-routes.get('/user/get-user-detail/:id', UserController.getUser)
-routes.post('/user/create', UserController.addUser)
-routes.post('/user/update', UserController.updateUser)
-routes.post('/user/changeavatar', UserController.changeAvatar)
-routes.post('/user/login', UserController.login)
-routes.get('/user/checkemail/:email', UserController.checkIsmail)
+routes.get('/user', UserController.getAllUsers)  //Get all user
+routes.get('/user/get-user-detail/:id', UserController.getUser) //Get detail user
+routes.post('/user/create', UserController.addUser)  //Add user
+routes.post('/user/update', UserController.updateUser)  // Update user by email
+routes.post('/user/update-role', UserController.updateRole)  //Update role by email
+routes.post('/user/changeavatar', UserController.changeAvatar)  // Change avatar
+routes.post('/user/login', UserController.login)  // Login user
+routes.get('/user/checkemail/:email', UserController.checkIsmail)  // Check email is exist
 
 //Rent
 routes.post('/rent/create', RentController.addRent) //Add rent
@@ -62,6 +64,7 @@ routes.get('/fcmtoken/get-list-token-user/:userId', FcmTokenController.getListTo
 routes.post('/notification/create', NotifcationController.addNotification) // add Notification
 routes.get('/notification/filter/:hostID', NotifcationController.getAllNotification) // Get all Notification
 routes.get('/notification/delete-notification/:userID', NotifcationController.checkNotification) // delete Notification
+routes.get('/notification/read-notification/:hostID', NotifcationController.isRead) // check read Notification
 
 //post 
 routes.post('/post/create', PostController.addPost) // add Post

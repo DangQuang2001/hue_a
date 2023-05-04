@@ -4,13 +4,14 @@ const Schema = mongoose.Schema
 
 const Notification = new Schema({
     id: { type: String, required: true, unique: true },
+    senderId: { type: String, ref: 'User' },
     title: { type: String, required: true },
-    roomID: { type: String, required: true },
-    hostID: { type: String, required: true },
-    imageHost: { type: String, required: true },
-    nameHost: { type: String, required: true },
+    type: { type: Number, required: true },
     dateSend: { type: Date },
-    isDelete: { type: Array, required: true },
+    receiverId: { type: String },
+    readBy: { type: Array },
+    isDelete: { type: Array },
+    dataId: { type: String }
 
 }, {
     timestamps: true
